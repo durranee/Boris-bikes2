@@ -41,7 +41,7 @@ describe DockingStation do
 
   it "doesn't release a bike if it is broken" do
     ds = DockingStation.new
-    # broken fake bike scenario set up, one method callled working returns false
+    # broken fake bike scenario set up, one method called working returns false
     @broken_fake_bike = double("broken_bike", :working => false)
     ds.dock_bike(@broken_fake_bike)
     expect { ds.release_bike }.to raise_error "Sorry, bike broken"
