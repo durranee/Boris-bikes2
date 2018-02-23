@@ -1,10 +1,11 @@
 require_relative 'bike'
 class DockingStation
   attr_reader :bikes
-
-  def initialize
+  #DEFAULT_LIMIT = 20
+  def initialize#(limit = DEFAULT_LIMIT)
     @bikes = []
-    20.times { @bikes << Bike.new }
+    @capacity = 20
+    #limit.times { dock_bike(Bike.new)}
   end
 
   def release_bike
@@ -13,7 +14,7 @@ class DockingStation
   end
 
   def dock_bike(bike)
-    raise "there is no space" if @bikes.length == 20
+    raise "there is no space" if @bikes.length >= @capacity
     @bikes.push(bike)
      #@bike = bike
   end
