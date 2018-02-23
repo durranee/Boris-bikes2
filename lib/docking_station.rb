@@ -15,8 +15,7 @@ class DockingStation
 
   def dock_bike(bike)
     raise "there is no space" if full?
-    @bikes.push(bike)
-     #@bike = bike
+    bike.working ? @bikes.push(bike) : @bikes.insert(0,bike)
   end
 
 private
