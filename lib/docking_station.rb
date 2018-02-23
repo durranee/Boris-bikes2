@@ -1,10 +1,10 @@
 require_relative 'bike'
 class DockingStation
   attr_reader :bikes
-  #DEFAULT_LIMIT = 20
-  def initialize#(limit = DEFAULT_LIMIT)
+  DEFAULT_CAPACITY = 20
+  def initialize
     @bikes = []
-    @capacity = 20
+    @capacity = DEFAULT_CAPACITY
     #limit.times { dock_bike(Bike.new)}
   end
 

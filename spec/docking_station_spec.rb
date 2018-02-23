@@ -23,14 +23,13 @@ describe DockingStation do
 
 
   it 'release_bike should raise an error if docking station empty' do
-    ds = DockingStation.new
     #20.times {ds.release_bike}
-    expect { ds.release_bike }.to raise_error "Staaaahp! there is no bike"
+    expect { subject.release_bike }.to raise_error "Staaaahp! there is no bike"
   end
 
   it 'dock_bike should raise an error if its full' do
     # it starts with 20 so subject is fine
-    20.times { subject.dock_bike(Bike.new) }
+    DockingStation::DEFAULT_CAPACITY.times { subject.dock_bike(Bike.new) }
     # no more bikes can be docked so raise error
     expect { subject.dock_bike(@bike)}.to raise_error "there is no space"
   end
