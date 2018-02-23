@@ -3,22 +3,17 @@ require 'docking_station'
 describe DockingStation do
   before (:each) do
     ds = DockingStation.new
-    @bike = Bike.new
-
+    @fake_bike = double
+    allow(@fake_bike).to receive(:working).and_return(true)
   end
-  # it 'responds to release_bike' do
-  #   expect(subject).to respond_to :release_bike
-  # end
+
   it { should respond_to(:release_bike)}
-
-
   it { should respond_to(:dock_bike) }
   it { should respond_to(:dock_bike).with(1).arguments }
 
   it 'checks if dock_bike actually takes a bike' do
-    bike = Bike.new
-    #bike = subject.release_bike
-    expect(subject.dock_bike(bike).last).to eq(bike)
+
+    expect(subject.dock_bike(@fake_bike).last).to eq(@fake_bike)
   end
 
 
@@ -30,26 +25,26 @@ describe DockingStation do
   it 'dock_bike should raise an error if more than DEFAULT_CAPACITY' do
     # it starts with 20 so subject is fine
     DockingStation::DEFAULT_CAPACITY.times do
-      subject.dock_bike(Bike.new)
+      subject.dock_bike(@fake_bike)
       end
     # no more bikes can be docked so raise error
-    expect { subject.dock_bike(@bike)}.to raise_error "there is no space"
+    expect { subject.dock_bike(@fake_bike)}.to raise_error "there is no space"
 
   end
 
   it 'dock_bike should raise an error if its full' do
     ds = DockingStation.new(50)
     # it starts with 20 so subject is fine
-    50.times { ds.dock_bike(Bike.new) }
+    50.times { ds.dock_bike(@fake_bike) }
     # no more bikes can be docked so raise error
-    expect { ds.dock_bike(@bike)}.to raise_error "there is no space"
+    expect { ds.dock_bike(@fake_bike)}.to raise_error "there is no space"
   end
 
   it "doesn't release a bike if it is broken" do
     ds = DockingStation.new
-    bike_1 = Bike.new
-    bike_1.working= false 
-    ds.dock_bike(bike_1)
+    @broken_fake_bike = double
+    allow(@broken_fake_bike).to receive(:working).and_return(false)
+    ds.dock_bike(@broken_fake_bike)
     expect { ds.release_bike }.to raise_error "Sorry, bike broken"
   end
 
