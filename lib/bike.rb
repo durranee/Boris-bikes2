@@ -1,3 +1,4 @@
+# Bike class
 class Bike
   attr_accessor :working
 
